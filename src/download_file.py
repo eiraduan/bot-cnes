@@ -24,7 +24,7 @@ def download_file(url, local_path):
 def main():
 
     download_url = "https://s3.sa-east-1.amazonaws.com/ckan.saude.gov.br/CNES/cnes_estabelecimentos_csv.zip"
-    download_directory = "downloads"
+    download_directory = "download"
     
     # Create the downloads directory if it doesn't exist
     if not os.path.exists(download_directory):
