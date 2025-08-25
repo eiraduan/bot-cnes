@@ -31,7 +31,7 @@ try:
     
     # Adiciona a verificação "IF NOT EXISTS" para evitar erros se a tabela já existir
     create_table_query = """
-    CREATE TABLE IF NOT EXISTS dados_cnes (
+    CREATE TABLE IF NOT EXISTS dados_cnes2 (
         ID SERIAL PRIMARY KEY,
         CO_CNES INTEGER,
         CO_UNIDADE TEXT,

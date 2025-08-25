@@ -16,8 +16,8 @@ db_port = os.getenv("DB_PORT", 5432)
 
 # --- Configurações do Processamento ---
 pasta_arquivos = os.path.join("..", "cnes/download/extraido")
-estado_filtro = "RO"
-tabela_destino = "dados_cnes"
+estado_filtro = 11
+tabela_destino = "dados_cnes2"
 
 # ---
 print("Iniciando o processo de ETL (Extrair, Transformar, Carregar)...")
@@ -52,16 +52,20 @@ else:
             print(f"\nProcessando o arquivo: {arquivo}")
             
             # Lê o arquivo CSV completo para um DataFrame do pandas
-            df = pd.read_csv(caminho_completo, sep=';', encoding='latin1')
+            df = pd.read_csv(caminho_completo, sep=';', encoding='latin1', low_memory=False)
             df.columns = df.columns.str.lower()
-            print(df.columns)
+
+            coluna_uf = 'co_uf'
+            df_ro = df[df[coluna_uf] == estado_filtro].copy()
+            
+            print(df_ro)
             
             
             if not df.empty:
                 print(f"  {len(df)} linhas encontradas para o filtro.")
                 
                 # 3. Salva os dados no banco de dados
-                df.to_sql(
+                df_ro.to_sql(
                     name=tabela_destino,
                     con=engine,
                     if_exists='append',
